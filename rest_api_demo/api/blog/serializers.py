@@ -6,7 +6,7 @@ blog_post = api.model('Blog post', {
     'title': fields.String(required=True, description='Article title'),
     'body': fields.String(required=True, description='Article content'),
     'pub_date': fields.DateTime,
-    'category_id': fields.Integer(attribute='category.id'),
+    'category_ip': fields.String(attribute='category.ip'),
     'category': fields.String(attribute='category.name'),
 })
 
@@ -22,7 +22,7 @@ page_of_blog_posts = api.inherit('Page of blog posts', pagination, {
 })
 
 category = api.model('Blog category', {
-    'id': fields.Integer(readOnly=True, description='The unique identifier of a blog category'),
+    'ip': fields.String(readOnly=True, description='The unique identifier of a blog category'),
     'name': fields.String(required=True, description='Category name'),
 })
 

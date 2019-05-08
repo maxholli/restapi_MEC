@@ -13,7 +13,7 @@ class Post(db.Model):
     body = db.Column(db.Text)
     pub_date = db.Column(db.DateTime)
 
-    category_id = db.Column(db.Integer, db.ForeignKey('category.id'))
+    category_ip = db.Column(db.String(50), db.ForeignKey('category.ip'))
     category = db.relationship('Category', backref=db.backref('posts', lazy='dynamic'))
 
     def __init__(self, title, body, category, pub_date=None):
@@ -29,7 +29,7 @@ class Post(db.Model):
 
 
 class Category(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    ip = db.Column(db.String(50), primary_key=True)
     name = db.Column(db.String(50))
 
     def __init__(self, name):

@@ -34,20 +34,20 @@ class CategoryCollection(Resource):
         return None, 201
 
 
-@ns.route('/<int:id>')
+@ns.route('/<string:ip>')
 @api.response(404, 'Category not found.')
 class CategoryItem(Resource):
 
     @api.marshal_with(category_with_posts)
-    def get(self, id):
+    def get(self, ip):
         """
         Returns a category with a list of posts.
         """
-        return Category.query.filter(Category.id == id).one()
+        return Category.query.filter(Category.ip == ip).one()
 
     @api.expect(category)
     @api.response(204, 'Category successfully updated.')
-    def put(self, id):
+    def put(self, ip):
         """
         Updates a blog category.
 
@@ -64,13 +64,13 @@ class CategoryItem(Resource):
         * Specify the ID of the category to modify in the request URL path.
         """
         data = request.json
-        update_category(id, data)
+        update_category(ip, data)
         return None, 204
 
     @api.response(204, 'Category successfully deleted.')
-    def delete(self, id):
+    def delete(self, ip):
         """
         Deletes blog category.
         """
-        delete_category(id)
+        delete_category(ip)
         return None, 204
