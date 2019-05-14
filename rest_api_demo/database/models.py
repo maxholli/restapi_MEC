@@ -37,3 +37,39 @@ class Category(db.Model):
 
     def __repr__(self):
         return '<Category %r>' % self.name
+
+UE_SUB = db.Table('ue_sub',
+                  db.Column('ue_id_br', db.Integer, db.ForeignKey('ue.ue_id'), primary_key=True),
+                  db.Column('sub_id_br', db.Integer, db.ForeignKey('subscription.sub_id'), primary_key=True)
+)
+    
+class UE(db.Model):
+    __tablename__ = 'ue'
+    ue_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+    ip = db.Column(db.String(15), unique=True, nullable=False)
+    ue_sub = db.relationship('Subscription', secondary=UE_SUB)
+    
+    def __init__(self, name, ip):
+        #self.ue_id = ue_id
+        self.name = name
+        self.ip = ip
+
+    def __repr__(self):
+        return '<UE %s %s>' % (self.name, self.ip)
+
+class Subscription(db.Model):
+    __tablename__ = 'subscription'
+    sub_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50))
+    port = db.Column(db.Integer)
+    
+    def __init__(self, sub_id, name, port):
+        self.sub_id = sub_id
+        self.name = name
+        self.port = port
+
+    def __repr__(self):
+        return '<Sub %d %s %s>' % (self.sub_id, self.name, self.port)
+
+
