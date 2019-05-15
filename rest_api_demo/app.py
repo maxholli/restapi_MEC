@@ -33,8 +33,7 @@ def initialize_app(flask_app):
 
     blueprint = Blueprint('api', __name__, url_prefix='/api')
     api.init_app(blueprint)
-#    api.add_namespace(blog_posts_namespace)
-#    api.add_namespace(blog_categories_namespace)
+    api.namespaces.clear()
     api.add_namespace(mec_ue_sub_namespace)
     api.add_namespace(mec_sub_namespace)
     api.add_namespace(mec_server_namespace)
