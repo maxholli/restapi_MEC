@@ -20,15 +20,20 @@ def create_sub(data):
     db.session.commit()
     
 ## add link between UE and subscription
-def update_ue_sub(data): 
-    ue_ip = data.get('ue_ip')
-    name = data.get('sub_name')
+def update_ue_sub(ue_ip, data): 
+    #ue_ip = data.get('ue_ip')
+    name = data.get('name')
     ue = UE.query.filter(UE.ip == ue_ip).one()
     sub = Subscription.query.filter(Subscription.name == name).one()
     ue.ue_sub.append(sub)
     db.session.add(ue)
     db.session.commit()
     
+def delete_ue(ue_ip):
+    ue = UE.query.filter(UE.ip == ue_ip).one()
+    db.session.delete(ue)
+    db.session.commit()
+
 '''
 def create_sub(data):
     db.session.commit()

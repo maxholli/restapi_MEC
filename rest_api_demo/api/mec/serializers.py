@@ -9,13 +9,18 @@ ue_add = api.model('ue add', {
 
 sub_add = api.model('sub add', {
     'sub_id': fields.Integer(readOnly=True, description='The unique id for sub'),
-    'sub_name': fields.String(description='Name of the subscription'),
-    'sub_port': fields.Integer(description='Port of the subscription'),    
+    'name': fields.String(description='Name of the subscription'),
+    'port': fields.Integer(description='Port of the subscription'),    
 })
 
 ue_sub = api.model('ue sub', {
-    'sub_name': fields.Integer(readOnly=True, description='Name of the subscription'),
-    'ue_ip': fields.Integer(readOnly=True, description='IP of the UE'),
+    'name': fields.String(readOnly=True, description='Name of the subscription'),
+    #'ue_ip': fields.Integer(readOnly=True, description='IP of the UE'),
+})
+
+## get a list of the subscriptions for a UE
+ue_with_subs = api.inherit('UE with list of subscriptions', ue_add, {
+    'ue_sub': fields.List(fields.Nested(sub_add))
 })
 
 '''
