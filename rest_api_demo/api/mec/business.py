@@ -1,5 +1,5 @@
 from rest_api_demo.database import db
-from rest_api_demo.database.models import UE, Subscription
+from rest_api_demo.database.models import UE, Subscription, Server
 
 ## create UE
 def create_ue(data):
@@ -13,10 +13,18 @@ def create_ue(data):
 ## create Subscription
 def create_sub(data):
     sub_id = data.get('sub_id')
-    sub_name = data.get('sub_name')
-    port = data.get('sub_port')
+    sub_name = data.get('name')
+    port = data.get('port')
     sub = Subscription(sub_id, sub_name, port)
     db.session.add(sub)
+    db.session.commit()
+
+## create Server
+def create_ser(data):
+    ser_id = data.get('ser_id')
+    ip = data.get('ip')
+    ser = Server(ser_id, ip)
+    db.session.add(ser)
     db.session.commit()
     
 ## add link between UE and subscription
@@ -28,12 +36,31 @@ def update_ue_sub(ue_ip, data):
     ue.ue_sub.append(sub)
     db.session.add(ue)
     db.session.commit()
+
+## add link between subscription and server
+def update_sub_server(name, data): 
+    ip = data.get('ip')
+    ser = Server.query.filter(Server.ip == ip).one()
+    sub = Subscription.query.filter(Subscription.name == name).one()
+    sub.sub_server.append(ser)
+    db.session.add(sub)
+    db.session.commit()
     
 def delete_ue(ue_ip):
     ue = UE.query.filter(UE.ip == ue_ip).one()
     db.session.delete(ue)
     db.session.commit()
 
+def delete_sub(sub_name):
+    sub = Subscription.query.filter(Subscription.name == sub_name).one()
+    db.session.delete(sub)
+    db.session.commit()
+
+def delete_ser(ser_ip):
+    ser = Server.query.filter(Server.ip == ser_ip).one()
+    db.session.delete(ser)
+    db.session.commit()
+    
 '''
 def create_sub(data):
     db.session.commit()

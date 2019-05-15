@@ -13,15 +13,34 @@ sub_add = api.model('sub add', {
     'port': fields.Integer(description='Port of the subscription'),    
 })
 
+ser_add = api.model('ser add', {
+    'ser_id': fields.Integer(readOnly=True, description='The unique id for ser'),
+    'ip': fields.String(description='IP of the UE'),
+
+})
+
 ue_sub = api.model('ue sub', {
     'name': fields.String(readOnly=True, description='Name of the subscription'),
     #'ue_ip': fields.Integer(readOnly=True, description='IP of the UE'),
 })
 
+sub_server = api.model('sub server', {
+    'ip': fields.String(readOnly=True, description='IP of the server'),
+})
+
 ## get a list of the subscriptions for a UE
 ue_with_subs = api.inherit('UE with list of subscriptions', ue_add, {
-    'ue_sub': fields.List(fields.Nested(sub_add))
+    'ue_sub': fields.List(fields.Nested(sub_add)) ## 'ue_sub' has to correspond to a field in the UE object?? question?
 })
+
+sub_with_servers = api.inherit('Subscription with list of servers', sub_add, {
+    'sub_server': fields.List(fields.Nested(ser_add))
+})
+
+ue_with_subs_servers = api.inherit('UE with list of subs and servers', ue_add, {
+    'ue_sub': fields.List(fields.Nested(sub_with_servers))
+})
+
 
 '''
 blog_post = api.model('Blog post', {

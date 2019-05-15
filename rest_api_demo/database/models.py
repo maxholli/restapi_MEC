@@ -42,6 +42,11 @@ UE_SUB = db.Table('ue_sub',
                   db.Column('ue_id_br', db.Integer, db.ForeignKey('ue.ue_id'), primary_key=True),
                   db.Column('sub_id_br', db.Integer, db.ForeignKey('subscription.sub_id'), primary_key=True)
 )
+
+SUB_SERVER = db.Table('sub_server',
+                  db.Column('ser_id_tr', db.Integer, db.ForeignKey('server.ser_id'), primary_key=True),
+                  db.Column('sub_id_tr', db.Integer, db.ForeignKey('subscription.sub_id'), primary_key=True)
+)
     
 class UE(db.Model):
     __tablename__ = 'ue'
@@ -58,11 +63,13 @@ class UE(db.Model):
     def __repr__(self):
         return '<UE %s %s>' % (self.name, self.ip)
 
+
 class Subscription(db.Model):
     __tablename__ = 'subscription'
     sub_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
     port = db.Column(db.Integer)
+    sub_server = db.relationship('Server', secondary=SUB_SERVER)
     
     def __init__(self, sub_id, name, port):
         self.sub_id = sub_id
@@ -72,4 +79,14 @@ class Subscription(db.Model):
     def __repr__(self):
         return '<Sub %d %s %s>' % (self.sub_id, self.name, self.port)
 
+class Server(db.Model):
+    __tablename__ = 'server'
+    ser_id = db.Column(db.Integer, primary_key=True)
+    ip = db.Column(db.String(15))
+    
+    def __init__(self, ser_id, ip):
+        self.ser_id = ser_id
+        self.ip = ip
 
+    def __repr__(self):
+        return '<Server %d %s>' % (self.ser_id, self.ip)
