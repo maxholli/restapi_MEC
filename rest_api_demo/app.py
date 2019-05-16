@@ -3,8 +3,6 @@ import logging.config
 import os
 from flask import Flask, Blueprint
 from rest_api_demo import settings
-from rest_api_demo.api.blog.endpoints.posts import ns as blog_posts_namespace
-from rest_api_demo.api.blog.endpoints.categories import ns as blog_categories_namespace
 from rest_api_demo.api.mec.endpoints.ue_sub import ns as mec_ue_sub_namespace
 from rest_api_demo.api.mec.endpoints.sub import ns as mec_sub_namespace
 from rest_api_demo.api.mec.endpoints.server import ns as mec_server_namespace
@@ -46,6 +44,7 @@ def initialize_app(flask_app):
 def main():
     initialize_app(app)
     log.info('>>>>> Starting development server at http://{}/api/ <<<<<'.format(app.config['SERVER_NAME']))
+    #app.run(host='192.168.5.225', port=5000, debug=settings.FLASK_DEBUG)
     app.run(debug=settings.FLASK_DEBUG)
 
 

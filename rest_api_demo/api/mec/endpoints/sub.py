@@ -2,15 +2,10 @@ import logging
 
 from flask import request
 from flask_restplus import Resource
-## TODO: Make mec.business DONE, create_UE_SUB DONE, create_ue DONE, create_sub DONE
-#from rest_api_demo.api.blog.business import create_category, delete_category, update_category
-from rest_api_demo.api.mec.business import create_ue, update_ue_sub, delete_ue, create_sub, delete_sub, update_sub_server
-## TODO: mec.serializers, ue_sub
-#from rest_api_demo.api.blog.serializers import category, category_with_posts
-from rest_api_demo.api.mec.serializers import ue_add, ue_sub, ue_with_subs, sub_add, sub_with_servers, sub_server
+from rest_api_demo.api.mec.business import create_sub, delete_sub, update_sub_server
+from rest_api_demo.api.mec.serializers import sub_add, sub_with_servers, ser_add
 from rest_api_demo.api.restplus import api
-## TODO: UE_SUB DONE, Subscription DONE, UE DONE 
-from rest_api_demo.database.models import Subscription, UE
+from rest_api_demo.database.models import Subscription
 
 log = logging.getLogger(__name__)
 
@@ -50,7 +45,7 @@ class SubItem(Resource):
         """
         return Subscription.query.filter(Subscription.name == name).one()
 
-    @api.expect(sub_server)
+    @api.expect(ser_add)
     @api.response(204, 'Subscription successfully updated.')
     def put(self, name):
         """
@@ -62,7 +57,7 @@ class SubItem(Resource):
 
         ```
         {
-          "ip": "New Server IP"
+          "ser_ip": "New Server IP"
         }
         ```
 

@@ -1,0 +1,67 @@
+### MEC db schema ###
+
+CREATE TABLE ue (
+    name VARCHAR(50),
+    ue_ip VARCHAR(15),
+    PRIMARY KEY (ue_ip)
+);
+CREATE TABLE subscription (
+    name VARCHAR(50),
+    port INTEGER,
+    PRIMARY KEY (name)
+);
+CREATE TABLE server (
+    ser_ip VARCHAR(15),
+    PRIMARY KEY (ser_ip)
+);
+CREATE TABLE ue_sub (
+    ue_ip_br VARCHAR(15),
+    sub_name_br VARCHAR(50),
+    FOREIGN KEY (ue_ip_br) REFERENCES ue(ue_ip),
+    FOREIGN KEY (sub_name_br) REFERENCES subscription(name),
+    PRIMARY KEY (ue_ip_br, sub_name_br)
+);
+CREATE TABLE sub_server (
+    sub_name_tr VARCHAR(50),
+    ser_ip_tr VARCHAR(15),
+    FOREIGN KEY (sub_name_tr) REFERENCES subscription(name),
+    FOREIGN KEY (ser_ip_tr) REFERENCES server(ser_ip),
+    PRIMARY KEY (sub_name_tr, ser_ip_tr)
+);
+
+
+
+
+### old db schema with an ID column in each table ###
+
+CREATE TABLE ue (
+    ue_id INTEGER,
+    name VARCHAR(50),
+    ip VARCHAR(15),
+    PRIMARY KEY (ue_id)
+);
+CREATE TABLE subscription (
+    sub_id INTEGER,
+    name VARCHAR(50),
+    port INTEGER,
+    PRIMARY KEY (sub_id)
+);
+CREATE TABLE server (
+    ser_id INTEGER,
+    ip VARCHAR(15),
+    PRIMARY KEY (ser_id)
+);
+CREATE TABLE ue_sub (
+    ue_id_br INTEGER,
+    sub_id_br INTEGER,
+    FOREIGN KEY (ue_id_br) REFERENCES ue(ue_id),
+    FOREIGN KEY (sub_id_br) REFERENCES subscription(sub_id),
+    PRIMARY KEY (ue_id_br, sub_id_br)
+);
+CREATE TABLE sub_server (
+    sub_id_tr INTEGER,
+    ser_id_tr INTEGER,
+    FOREIGN KEY (sub_id_tr) REFERENCES subscription(sub_id),
+    FOREIGN KEY (ser_id_tr) REFERENCES server(ser_id),
+    PRIMARY KEY (sub_id_tr, ser_id_tr)
+);

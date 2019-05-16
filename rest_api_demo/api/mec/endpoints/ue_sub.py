@@ -2,15 +2,10 @@ import logging
 
 from flask import request
 from flask_restplus import Resource
-## TODO: Make mec.business DONE, create_UE_SUB DONE, create_ue DONE, create_sub DONE
-#from rest_api_demo.api.blog.business import create_category, delete_category, update_category
 from rest_api_demo.api.mec.business import create_ue, update_ue_sub, delete_ue
-## TODO: mec.serializers, ue_sub
-#from rest_api_demo.api.blog.serializers import category, category_with_posts
 from rest_api_demo.api.mec.serializers import ue_add, ue_sub, ue_with_subs, ue_with_subs_servers
 from rest_api_demo.api.restplus import api
-## TODO: UE_SUB DONE, Subscription DONE, UE DONE 
-from rest_api_demo.database.models import Subscription, UE
+from rest_api_demo.database.models import UE
 
 log = logging.getLogger(__name__)
 
@@ -48,7 +43,7 @@ class UEItem(Resource):
         """
         Returns a name of UE associated with an IP.
         """
-        return UE.query.filter(UE.ip == ip).one()
+        return UE.query.filter(UE.ue_ip == ip).one()
 
     @api.expect(ue_sub)
     @api.response(204, 'UE successfully updated.')
@@ -62,7 +57,7 @@ class UEItem(Resource):
 
         ```
         {
-          "sub_name": "New Subscription Name"
+          "name": "New Subscription Name"
         }
         ```
 
@@ -89,7 +84,7 @@ class UEsubs(Resource):
         """
         Returns all subscriptions associated with an IP.
         """
-        return UE.query.filter(UE.ip == ip).one()
+        return UE.query.filter(UE.ue_ip == ip).one()
 
 @ns.route('/<string:ip>/subsciption_servers')
 @api.response(404, 'UE not found.')
@@ -100,4 +95,4 @@ class UEsubs_servers(Resource):
         """
         Returns all subscriptions and their servers associated with an UE.
         """
-        return UE.query.filter(UE.ip == ip).one()
+        return UE.query.filter(UE.ue_ip == ip).one()
