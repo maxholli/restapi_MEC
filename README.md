@@ -28,12 +28,12 @@ $ source venv/bin/activate
 
 ## MEC restapi details
 
-#### This api should appear when you run ./app.py.
+### 1. This api should appear when you run ./app.py.
 ![alt text](./Figures/MEC_swaggar.png "mec swagger interface")
 
 This api allows the user to interact with the MEC database. This database holds all of the UE, Subscriptions, Servers, and their relationships to each other.
 
-#### MEC database schema
+### 2. MEC database schema
 
 ![alt text](./Figures/MEC_db_schema.png "mec db schema")
 
@@ -44,5 +44,5 @@ Try out the:
 
 You should see a UE linked to multiple subscriptions with multiple server IPs.
 
-#### The resulting json is in the same format as this table: 
-![alt text](./Figures/MEC_rule2.png "mec rules")
+### 3. The resulting json should match the following relationship: 
+![alt text](./Figures/MEC_relation.png "mec rules")
