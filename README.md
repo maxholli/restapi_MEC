@@ -37,6 +37,10 @@ This api allows the user to interact with the MEC database. This database holds 
 
 ![alt text](./Figures/MEC_db_schema.png "mec db schema")
 
+And the ER Diagram
+
+![alt text](./Figures/MEC_er_diagram.png "mec db er diagram")
+
 With the api you can add/delete/modify UEs, Subscriptions and so on...
 
 Try out the:
