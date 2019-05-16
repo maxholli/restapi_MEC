@@ -41,6 +41,8 @@ And the ER Diagram
 
 ![alt text](./Figures/MEC_er_diagram.png "mec db er diagram")
 
+The UE, Server, and Subscription all get there own entities. This is so we can add attributes if need. For example, the server might be more than just an IP address.
+
 With the api you can add/delete/modify UEs, Subscriptions and so on...
 
 Try out the:
