@@ -2,7 +2,7 @@ import logging
 
 from flask import request
 from flask_restplus import Resource
-from rest_api_demo.api.mec.business import create_ue, update_ue_sub, delete_ue
+from rest_api_demo.api.mec.business import create_ue, update_ue_sub, delete_ue, delete_all_ues
 from rest_api_demo.api.mec.serializers import ue_add, ue_sub, ue_with_subs, ue_with_subs_servers
 from rest_api_demo.api.restplus import api
 from rest_api_demo.database.models import UE
@@ -33,6 +33,14 @@ class UE_Collection(Resource):
         create_ue(data)
         return None, 201
 
+    @api.response(204, 'All UEs successfully deleted.')
+    def delete(self):
+        """
+        Deletes all UEs.
+        """
+        ues = UE.query.all()
+        delete_all_ues(ues)
+        return None, 204
 
 @ns.route('/<string:ip>')
 @api.response(404, 'UE not found.')
@@ -70,7 +78,7 @@ class UEItem(Resource):
     @api.response(204, 'UE successfully deleted.')
     def delete(self, ip):
         """
-        Deletes UE.
+        Deletes specified UE.
         """
         delete_ue(ip)
         return None, 204

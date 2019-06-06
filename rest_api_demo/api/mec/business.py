@@ -56,3 +56,8 @@ def delete_ser(ser_ip):
     ser = Server.query.filter(Server.ser_ip == ser_ip).one()
     db.session.delete(ser)
     db.session.commit()
+
+def delete_all_ues(ues):
+    for ue in ues:
+        db.session.delete(ue)
+        db.session.commit()
